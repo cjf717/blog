@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site网站
-title: 创梦天空个人博客
-subtitle: 'HEXO-BLOG'
+title: 创梦博客
+subtitle: '创梦天空个人博客HEXO-BLOG'
 description: '这是一个由创梦天空创建的个人博客，主要目的是保存和记录文章，以便日后查阅。'
 keywords: blog
 author: Jeff
@@ -98,10 +98,12 @@ ignore:
 # Extensions扩展
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape  # 当前主题名称。值为false时禁用主题
+# 当前主题名称。值为false时禁用主题，hexo-theme-matery butterfly melody landscape(默认)
+theme: butterfly
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 # 部署部分的设置
 deploy:
   type: ''
+

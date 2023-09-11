@@ -1,4 +1,5 @@
 ---
 title: {{ title }}
-tags:
+categories: 未分类
+tags: 无标签
 ---
