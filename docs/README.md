@@ -1,13 +1,13 @@
+---
+title: 使用说明,
+date: 2023-09-06 12:00:00,
+categories: 编程,
+tags: blog
+---
+
 # 说明
 ## 建立目的
 这是一个由创梦天空创建的个人博客，主要目的是保存和记录文章，以便日后查阅。
-
-;;;
-"title": "使用说明",
-"date": "2023-09-06 12:00:00",
-"categories": "编程",
-"tags": "blog"
-;;;
 
 # Hexo Blog 项目工程
 
@@ -32,7 +32,7 @@ npm run build
 ```
 git add .
 git commit -m "init"
-// git remote add origin https://gitee.com/jeff-chan/jeff-chan.git
+// git remote add origin git@gitee.com:jeff-chan/blog.git
 git push -u origin "main"
 ```
 
@@ -42,7 +42,8 @@ git push -u origin "main"
 git add .
 git commit -m "增加github仓库"
 // git branch -M main
-// git remote add github https://github.com/cjf717/cjf717.github.io.git
+//// git remote add github https://github.com/cjf717/cjf717.github.io.git
+// git remote add github git@github.com:cjf717/blog.git
 git push -u github main
 ```
 

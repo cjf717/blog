@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Git版本控制工具详解笔记 | 创梦博客</title><meta name="author" content="Jeff"><meta name="copyright" content="Jeff"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="说明：本笔记根据coderwhy在前端系统课《前端工程化基础》的《Git版本控制工具详解》所写笔记。   本教程分了2天讲解，详细分析并演示了git的各种操作。第1天遇到了本地分支和远程分支名称不一致，导致push远程仓库不成功的情况。第2天花了较多时间讲解处理此问题的方法和意见。讲清楚了tag标签和banch分支的不同作用，push中解决冲突的方法是merge合并。工作流的作用是在不同版本中开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git版本控制工具详解笔记">
+<meta property="og:url" content="https://jeff-chan.gitee.io/blog/2023/09/11/git%E6%95%99%E7%A8%8B/Git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E8%AF%A6%E8%A7%A3%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="创梦博客">
+<meta property="og:description" content="说明：本笔记根据coderwhy在前端系统课《前端工程化基础》的《Git版本控制工具详解》所写笔记。   本教程分了2天讲解，详细分析并演示了git的各种操作。第1天遇到了本地分支和远程分支名称不一致，导致push远程仓库不成功的情况。第2天花了较多时间讲解处理此问题的方法和意见。讲清楚了tag标签和banch分支的不同作用，push中解决冲突的方法是merge合并。工作流的作用是在不同版本中开">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-09-11T01:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-12T01:12:54.741Z">
+<meta property="article:author" content="Jeff">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/blog/img/favicon.png"><link rel="canonical" href="https://jeff-chan.gitee.io/blog/2023/09/11/git%E6%95%99%E7%A8%8B/Git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E8%AF%A6%E8%A7%A3%E7%AC%94%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: {"path":"/blog/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Git版本控制工具详解笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-12 09:12:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/blog/" title="创梦博客"><span class="site-name">创梦博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/blog/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/blog/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/blog/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/blog/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Git版本控制工具详解笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-11T01:00:00.000Z" title="发表于 2023-09-11 09:00:00">2023-09-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-12T01:12:54.741Z" title="更新于 2023-09-12 09:12:54">2023-09-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/%E7%BC%96%E7%A8%8B/">编程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Git版本控制工具详解笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>说明：本笔记根据coderwhy在前端系统课《前端工程化基础》的《Git版本控制工具详解》所写笔记。</p>
+</blockquote>
+<blockquote>
+<p>本教程分了2天讲解，详细分析并演示了git的各种操作。第1天遇到了本地分支和远程分支名称不一致，导致push远程仓库不成功的情况。第2天花了较多时间讲解处理此问题的方法和意见。讲清楚了tag标签和banch分支的不同作用，push中解决冲突的方法是merge合并。工作流的作用是在不同版本中开发，避免主分支出问题影响正常使用。</p>
+</blockquote>
+<h1 id="合并本地仓库与远程仓库完全不相干的项目"><a href="#合并本地仓库与远程仓库完全不相干的项目" class="headerlink" title="合并本地仓库与远程仓库完全不相干的项目"></a>合并本地仓库与远程仓库完全不相干的项目</h1><p>前言，在本地已经存在一个项目，远程仓库也存在一个项目。由于没有建立关联，直接pull或者push都会出错。</p>
+<ol>
+<li>添加远程仓库：<code>git remote add &lt;shortname&gt; &lt;url&gt;</code></li>
+<li>从远程仓库fetch代码：从远程仓库获取最新的代码 <code>get fetch</code></li>
+<li>给当前分支设置一个跟踪分支:<code>git branch --set-upstream-to=origin/master</code></li>
+<li>合并不相干的历史: <code>git merge --allow-unrelated-histories</code></li>
+<li>获取到代码后合并到本地仓库: <code>git merge</code></li>
+<li>将远程仓库的代码下载到本地仓库: <code>git pull</code></li>
+<li>将本地仓库的代码推送到远程仓库: <code>git push</code>，强制更新<code>git push -f</code>(&#x3D;&#x3D;非必要不使用&#x3D;&#x3D;)</li>
+</ol>
+<h2 id="一-问题的处理"><a href="#一-问题的处理" class="headerlink" title="一. 问题的处理"></a>一. 问题的处理</h2><h3 id="1-1-设置上游分支-跟踪分支"><a href="#1-1-设置上游分支-跟踪分支" class="headerlink" title="1.1. 设置上游分支(跟踪分支)"></a>1.1. 设置上游分支(跟踪分支)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch</span><br><span class="line">git branch --set-upstream-to=origin/main</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-2-合并没有共同base分支"><a href="#1-2-合并没有共同base分支" class="headerlink" title="1.2. 合并没有共同base分支"></a>1.2. 合并没有共同base分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge --allow-unrelated-histories</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="1-3-Github的使用"><a href="#1-3-Github的使用" class="headerlink" title="1.3. Github的使用"></a>1.3. Github的使用</h3><h4 id="1-3-1-GitHub的作用"><a href="#1-3-1-GitHub的作用" class="headerlink" title="1.3.1. GitHub的作用"></a>1.3.1. GitHub的作用</h4><h4 id="1-3-2-GitHub查找和下载开源项目"><a href="#1-3-2-GitHub查找和下载开源项目" class="headerlink" title="1.3.2. GitHub查找和下载开源项目"></a>1.3.2. GitHub查找和下载开源项目</h4><h4 id="1-3-3-GitHub创建远程仓库"><a href="#1-3-3-GitHub创建远程仓库" class="headerlink" title="1.3.3. GitHub创建远程仓库"></a>1.3.3. GitHub创建远程仓库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">初始化本地仓库</span></span><br><span class="line">git init</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加远程仓库</span></span><br><span class="line">git remote add origin xxxx</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从远程仓库获取内容</span></span><br><span class="line">git fetch</span><br><span class="line">git branch --set-upstream-to=origin/main</span><br><span class="line">git merge --allow-unrelated-histories</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git push</span></span><br><span class="line">git config push.default upstream</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">换一种做法</span></span><br><span class="line">git checkout main</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-4-Gitlab的使用"><a href="#1-4-Gitlab的使用" class="headerlink" title="1.4. Gitlab的使用"></a>1.4. Gitlab的使用</h3><h2 id="二-git-tag"><a href="#二-git-tag" class="headerlink" title="二. git tag"></a>二. git tag</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">git tag v1.0.0</span><br><span class="line"></span><br><span class="line">git tag</span><br><span class="line"></span><br><span class="line">git tag -d v1.0.0</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将本地tag push远程仓库</span></span><br><span class="line">git push origin v1.0.0</span><br><span class="line">git push origin --tags</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除远程的tag</span></span><br><span class="line">git push origin -d v1.0.0</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="三-git的原理-git如何保存内容"><a href="#三-git的原理-git如何保存内容" class="headerlink" title="三. git的原理(git如何保存内容)"></a>三. git的原理(git如何保存内容)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">.git/objects/00 40</span></span><br><span class="line"></span><br><span class="line">git commit -m &quot;aaa&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">.git/object/eb -&gt; 提交信息/作者/tree</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">.git/object/aa</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">aaa.js -&gt; 00</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">bbb.js -&gt; 40</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="四-分支结构"><a href="#四-分支结构" class="headerlink" title="四. 分支结构"></a>四. 分支结构</h2><h3 id="4-1-本地分支的使用"><a href="#4-1-本地分支的使用" class="headerlink" title="4.1. 本地分支的使用"></a>4.1. 本地分支的使用</h3><p>创建分支</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git branch testing</span><br><span class="line">git checkout testing</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">合并</span></span><br><span class="line">git checkout -b testing</span><br></pre></td></tr></table></figure>
+
+
+
+<p>合并分支</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git merge testing</span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查看所有的分支</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除本地分支</span></span><br><span class="line">git branch -d testing</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-远程分支的操作"><a href="#4-2-远程分支的操作" class="headerlink" title="4.2. 远程分支的操作"></a>4.2. 远程分支的操作</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">初始化本地仓库</span></span><br><span class="line">git init</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加远程仓库</span></span><br><span class="line">git remote add origin xxxx</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从远程仓库获取内容</span></span><br><span class="line">git fetch</span><br><span class="line">git branch --set-upstream-to=origin/main</span><br><span class="line">git merge --allow-unrelated-histories</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git push</span></span><br><span class="line">git config push.default upstream</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">换一种做法</span></span><br><span class="line">git checkout main</span><br></pre></td></tr></table></figure>
+
+
+
+<p>推送一个远程分支:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git push origin develop</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">李四操作</span></span><br><span class="line">git checkout develop</span><br></pre></td></tr></table></figure>
+
+
+
+<p>删除远程分支</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin -d develop</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-3-git-flow工作流"><a href="#4-3-git-flow工作流" class="headerlink" title="4.3. git flow工作流"></a>4.3. git flow工作流</h3><p>第一图:</p>
+<ul>
+<li>master: 记录主要的版本</li>
+<li>develop: 开发版本</li>
+<li>topic: 新主题</li>
+</ul>
+<p>第二图:</p>
+<ul>
+<li>master: 记录主要的版本<ul>
+<li>tag</li>
+</ul>
+</li>
+<li>hotfix: 热修复<ul>
+<li>merge master</li>
+<li>merge develop</li>
+</ul>
+</li>
+<li>develop: 开发分支</li>
+<li>release: 上线的分支<ul>
+<li>merge master</li>
+<li>merge develop</li>
+</ul>
+</li>
+<li>feature: 新特性</li>
+</ul>
+<h3 id="4-4-git-rebase"><a href="#4-4-git-rebase" class="headerlink" title="4.4. git rebase"></a>4.4. git rebase</h3><ul>
+<li>改变某一个分支base, 目的让log的历史记录更加的简洁</li>
+<li>黄金原则: 不要在主分支中使用rebase</li>
+</ul>
+<h2 id="五-Git中常见的命令总结"><a href="#五-Git中常见的命令总结" class="headerlink" title="五. Git中常见的命令总结"></a>五. Git中常见的命令总结</h2><p>基础的命令: (必须掌握)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone xxxxxxxx</span><br><span class="line"></span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;xxxx&quot;</span><br><span class="line"></span><br><span class="line">git pull -&gt;(git fetch + git merge)</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+
+
+<p>进阶的命令:</p>
+<ul>
+<li>main</li>
+<li>develop</li>
+<li>feature</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git checkout develop</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1.检查服务器是否有origin/develop这个分支</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">2.创建一个本地的develop分支</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">3.让本地的develop分支自动跟踪origin/develop</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">4.切换到develop分支</span></span><br><span class="line"></span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;&quot;</span><br><span class="line">git pull</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+
+
+<p>高级的命令:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git tag</span><br><span class="line"></span><br><span class="line">git checkout -b develop</span><br><span class="line">git push origin develop</span><br><span class="line"></span><br><span class="line">git merge develop</span><br><span class="line">git rebase</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://jeff-chan.gitee.io/blog">Jeff</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jeff-chan.gitee.io/blog/2023/09/11/git%E6%95%99%E7%A8%8B/Git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E8%AF%A6%E8%A7%A3%E7%AC%94%E8%AE%B0/">https://jeff-chan.gitee.io/blog/2023/09/11/git%E6%95%99%E7%A8%8B/Git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E8%AF%A6%E8%A7%A3%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://jeff-chan.gitee.io/blog" target="_blank">创梦博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/git/">git</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/blog/2023/09/07/Markdown%E6%95%99%E7%A8%8B/9%E3%80%81Markdown%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7/" title="9、Markdown高级技巧"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">9、Markdown高级技巧</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/blog/2023/09/07/git%E6%95%99%E7%A8%8B/git%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="git规范管理代码"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-07</div><div class="title">git规范管理代码</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jeff</div><div class="author-info__description">这是一个由创梦天空创建的个人博客，主要目的是保存和记录文章，以便日后查阅。</div></div><div class="card-info-data site-data is-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%B8%8E%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E5%AE%8C%E5%85%A8%E4%B8%8D%E7%9B%B8%E5%B9%B2%E7%9A%84%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.</span> <span class="toc-text">合并本地仓库与远程仓库完全不相干的项目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E9%97%AE%E9%A2%98%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">一. 问题的处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%AE%BE%E7%BD%AE%E4%B8%8A%E6%B8%B8%E5%88%86%E6%94%AF-%E8%B7%9F%E8%B8%AA%E5%88%86%E6%94%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1. 设置上游分支(跟踪分支)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%90%88%E5%B9%B6%E6%B2%A1%E6%9C%89%E5%85%B1%E5%90%8Cbase%E5%88%86%E6%94%AF"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2. 合并没有共同base分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Github%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3. Github的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-GitHub%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">1.3.1. GitHub的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-GitHub%E6%9F%A5%E6%89%BE%E5%92%8C%E4%B8%8B%E8%BD%BD%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">1.3.2. GitHub查找和下载开源项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-GitHub%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">1.3.3. GitHub创建远程仓库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Gitlab%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4. Gitlab的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-git-tag"><span class="toc-number">1.2.</span> <span class="toc-text">二. git tag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-git%E7%9A%84%E5%8E%9F%E7%90%86-git%E5%A6%82%E4%BD%95%E4%BF%9D%E5%AD%98%E5%86%85%E5%AE%B9"><span class="toc-number">1.3.</span> <span class="toc-text">三. git的原理(git如何保存内容)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B-%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">四. 分支结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1. 本地分支的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2. 远程分支的操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-git-flow%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3. git flow工作流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-git-rebase"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4. git rebase</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94-Git%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">五. Git中常见的命令总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2023/09/11/git%E6%95%99%E7%A8%8B/Git%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7%E8%AF%A6%E8%A7%A3%E7%AC%94%E8%AE%B0/" title="Git版本控制工具详解笔记">Git版本控制工具详解笔记</a><time datetime="2023-09-11T01:00:00.000Z" title="发表于 2023-09-11 09:00:00">2023-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2023/09/07/Markdown%E6%95%99%E7%A8%8B/9%E3%80%81Markdown%E9%AB%98%E7%BA%A7%E6%8A%80%E5%B7%A7/" title="9、Markdown高级技巧">9、Markdown高级技巧</a><time datetime="2023-09-07T11:00:00.000Z" title="发表于 2023-09-07 19:00:00">2023-09-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2023/09/07/Markdown%E6%95%99%E7%A8%8B/8%E3%80%81Markdown%E8%A1%A8%E6%A0%BC/" title="8、Markdown表格">8、Markdown表格</a><time datetime="2023-09-07T10:00:00.000Z" title="发表于 2023-09-07 18:00:00">2023-09-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2023/09/07/Markdown%E6%95%99%E7%A8%8B/7%E3%80%81Markdown%E5%9B%BE%E7%89%87/" title="7、Markdown图片">7、Markdown图片</a><time datetime="2023-09-07T09:00:00.000Z" title="发表于 2023-09-07 17:00:00">2023-09-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/blog/2023/09/07/Markdown%E6%95%99%E7%A8%8B/6%E3%80%81Markdown%E9%93%BE%E6%8E%A5/" title="6、Markdown链接">6、Markdown链接</a><time datetime="2023-09-07T08:00:00.000Z" title="发表于 2023-09-07 16:00:00">2023-09-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Jeff</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
