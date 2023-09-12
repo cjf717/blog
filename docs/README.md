@@ -1,7 +1,7 @@
 ---
-title: 使用说明,
-date: 2023-09-06 12:00:00,
-categories: 编程,
+title: 说明
+date: 2023-09-06 12:00:00
+categories: 编程
 tags: blog
 ---
 
@@ -101,7 +101,7 @@ git subtree push --prefix=public github github-pages
 - 启动本地服务器预览 `hexo s`
 - 生成静态文件 `hexo g`
 - 部署网站 `hexo d`
-
+- 生成站点文件并推送至远程库。执行`hexo clean && hexo deploy`。
 ## 相关网站
 
 - [Hexo](http://hexo.io/)
