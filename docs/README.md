@@ -91,7 +91,7 @@ git pull origin main
 ```
 git checkout -b github-pages
 git subtree push --prefix=public github github-pages
-git subtree push --prefix=public origin github-pages
+# git subtree push --prefix=public origin github-pages
 ```
 
 ## hexo 命令
