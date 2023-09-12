@@ -3,7 +3,6 @@ title: Intel 14代酷睿即将发布
 date: 2023-09-12 10:15:44
 categories: 硬件信息
 tags: Intel
-cover: [img_url]
 ---
 
 Intel将于太平洋标准时间2023年10月17日6点(北京时间22点)，正式发布Raptor Lake Refresh 14代酷睿，评测解禁、上架销售。
