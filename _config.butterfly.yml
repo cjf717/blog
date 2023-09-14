@@ -10,8 +10,8 @@ menu:
   标签: /tags/ || fas fa-tags
   清单||fas fa-list:
     音乐: /music/ || fas fa-music
-    照片: /Gallery/ || fas fa-images
     电影: /movies/ || fas fa-video
+    图库: /gallery/ || fas fa-images
   友链: /link/ || fas fa-link
   关于: /about/ || fas fa-heart
 
@@ -39,3 +39,41 @@ local_search:
   # Unescape html strings to the readable one.
   unescape: false
   CDN:
+
+# 分享显示的内容  https://github.com/overtrue/share.js/
+sharejs:
+  enable: true
+  sites: wechat,weibo,qq
+
+# 音乐aplayer
+aplayer:
+  meting: true
+  asset_inject: false
+aplayerInject:
+  enable: true
+  per_page: true
+inject:
+  head:
+  bottom:
+    - <div class="aplayer no-destroy" data-id="5199155506" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="false"> </div>
+# Pjax
+# It may contain bugs and unstable, give feedback when you find the bugs.
+# https://github.com/MoOx/pjax
+# 全局播放背景音乐（使用 Pajx 实现）
+# 即实现页面跳转刷新后音乐不间断播放
+pjax:
+  enable: true
+
+# 数学公式
+# mathjax:
+#   enable: true
+#   # true 表示每一頁都加載mathjax.js
+#   # false 需要時加載，須在使用的Markdown Front-matter 加上 mathjax: true
+#   per_page: false
+
+katex:
+  enable: true
+  # true 表示每一頁都加載katex.js
+  # false 需要時加載，須在使用的Markdown Front-matter 加上 katex: true
+  per_page: false
+  hide_scrollbar: true

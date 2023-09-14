@@ -106,11 +106,14 @@ theme: butterfly
 # 部署部分的设置
 deploy:
 - type: 'git'
-  # repo: https://gitee.com/jeff-chan/blog.git
-  repo: https://github.com/cjf717/blog.git
-  branch: git-pages
-
-- type: 'git'
   repo: https://gitee.com/jeff-chan/blog.git
   branch: git-pages
 
+- type: 'git'
+  repo: https://github.com/cjf717/blog.git
+  branch: git-pages
+
+# 渲染引擎
+markdown:
+    plugins:
+      - '@renbaoshuo/markdown-it-katex'

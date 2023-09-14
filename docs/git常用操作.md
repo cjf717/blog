@@ -33,6 +33,9 @@ git checkout -b <branch>
 git push -u origin <branch>
 ```
 
+删除远程不存在分支：
+`git remote prune origin`
+
 ### 取消修改
 
 取消修改有三种情况：
