@@ -3,7 +3,6 @@ title: VUE3+TS项目打包和自动化部署
 date: 2023-02-08 13:00:00
 categories: 编程
 tags: [前端, VUE]
-cover: 008i3skNgy1gtt3bgnnvbj60rs0c8dgu02.jpg
 ---
 
 # 项目打包和自动化部署(深入 Vue3+TypeScript 技术栈-coderwhy 大神新课)

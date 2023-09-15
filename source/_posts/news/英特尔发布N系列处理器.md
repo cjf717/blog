@@ -5,11 +5,6 @@ categories: 新闻
 tags:
   - 硬件
   - intel
-cover: intel-n.webp
-# img: images/intel-n.webp
-# top: true
-# cover: true
-# coverImg: images/intel-n.webp
 ---
 
 ![](intel-n.webp)

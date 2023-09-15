@@ -5,7 +5,6 @@ categories: 编程
 tags:
   - JavaScript
   - 前端
-cover: /images/24个JavaScript循环遍历方法.png
 ---
 
 # 一、数组遍历方法

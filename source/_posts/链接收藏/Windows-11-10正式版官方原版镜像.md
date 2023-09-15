@@ -6,7 +6,6 @@ tags:
   - windows
   - win10
   - win11
-cover: images/windows.webp
 ---
 
 ## Window 11 22H2（2023 年 01 月 17 日发布）
