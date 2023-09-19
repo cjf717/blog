@@ -1,0 +1,77 @@
+<style>
+  button:hover {
+    color: red;
+    background-color: #eee;
+    text-decoration: underline;
+    text-underline-position: under;
+  }
+
+  ul {
+    border: 1px solid #eee;
+    box-shadow: 1px 1px #e2e2e2;
+  }
+</style>
+<h3 style="text-align: center">音乐播放器相关操作</h3>
+<div>说明：由于使用了pjax对页面进行无感刷新，导致无法获取从其他页面跳转的aplayers内容。如果要对aplayers进行相关操作时，需要刷新或者重新加载页面。</div>
+<ul>
+  <li><button onclick='getInfo()'>获取信息</button></li>
+  <li><button onclick='changeLrcType()'>修改歌词类型</button></li>
+  <!-- <li><button class='btnAplayer'>获取aplayer</button></li> -->
+  <li><button class='clearAplayer'>清空列表</button></li>
+</ul>
+<ul>
+  <li>
+    <button
+      onclick='addSong("怀集音乐之声", "蜻蜓FM", "https:\/\/lhttp.qingting.fm/live/4804/64k.mp3", "fm0758.png")'>怀集音乐之声</button>
+  </li>
+  <li>
+    <button
+      onclick='addSong("两广之声", "蜻蜓FM", "https:\/\/lhttp.qingting.fm/live/20500149/64k.mp3", "两广之声.jpeg")'>两广之声</button>
+  </li>
+  <li>
+    <button
+      onclick='addSong("羊城交通台", "蜻蜓FM", "https:\/\/lhttp.qingting.fm/live/1262/64k.mp3", "羊城交通台.png")'>羊城交通台</button>
+  </li>
+  <li>
+    <button
+      onclick='addSong("广州交通广播", "蜻蜓FM", "https:\/\/lhttp.qingting.fm/live/4955/64k.mp3", "广州交通广播.png")'>广州交通广播</button>
+  </li>
+  <li>
+    <button
+      onclick='addSong("广东音乐之声", "蜻蜓FM", "https:\/\/lhttp.qingting.fm/live/1260/64k.mp3", "广东音乐之声.jpeg")'>广东音乐之声</button>
+  </li>
+</ul>
+
+<script>
+  document.addEventListener('pjax:complete', () => console.log("pjax完成"))
+</script>
+
+<script>
+  function getInfo() {
+    // console.log("点击了按钮");
+    console.log("aplayers信息：", aplayers[0]);
+  }
+  function changeLrcType() {
+    console.log("修改歌词类型");
+    aplayers[0].options.lrcType = 0
+  }
+
+  function addSong(name, artist, url, cover) {
+    aplayers[0].list.add([{
+      name,
+      artist,
+      url,
+      cover,
+      lrc: 'lrc.lrc',
+      // theme: '#ebd0c2'
+    }]);
+    aplayers[0].list.switch(aplayers[0].list.audios.length - 1);
+    aplayers[0].play();
+  }
+
+  const clearAplayerEl = document.querySelector(".clearAplayer")
+  clearAplayerEl.addEventListener("click", () => {
+    aplayers[0].list.clear()
+    aplayers[0].lrc.hide()
+  })
+</script>

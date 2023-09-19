@@ -59,7 +59,7 @@ inject:
 # Pjax
 # It may contain bugs and unstable, give feedback when you find the bugs.
 # https://github.com/MoOx/pjax
-# 全局播放背景音乐（使用 Pajx 实现）
+# 全局播放背景音乐（使用 Pjax 实现）
 # 即实现页面跳转刷新后音乐不间断播放
 pjax:
   enable: true
